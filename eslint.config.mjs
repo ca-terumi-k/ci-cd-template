@@ -1,15 +1,22 @@
 import globals from "globals";
-import pluginJs from "@eslint/js";
-import pluginReact from "eslint-plugin-react";
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
+/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
+    files: ["**/*.js"],
     languageOptions: {
-      globals: globals.browser,
+      sourceType: "commonjs"
     },
+    rules: {
+      "no-console": ["error", { allow: ["warn", "error"] }], // console.logは禁止
+      "eqeqeq": ["error", "always"], // 厳密等価演算子を強制
+      "no-var": "error", // varの使用を禁止し、let/constを強制
+      "prefer-const": "error" // constが使用可能な場合はconstを強制
+    }
   },
-  pluginJs.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  {
+    languageOptions: {
+      globals: globals.browser
+    }
+  }
 ];
